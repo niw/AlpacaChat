@@ -1,0 +1,24 @@
+//
+//  AlpacaChatApp.xcconfig
+//  AlpacaChatApp
+//
+//  Created by Yoshimasa Niwa on 3/18/23.
+//
+
+// Place `Local.xcconfig` file which is git ignored in this `Configurations` directory
+// can supply local specific configurations such as code signing identity.
+// For example, put next content as `Local.xcconfig`.
+// ```
+// CODE_SIGN_STYLE = Manual
+// CODE_SIGN_IDENTITY = iPhone Developer
+// DEVELOPMENT_TEAM = $(YOUR_DEVELOPMENT_TEAM_ID)
+// PRODUCT_BUNDLE_IDENTIFIER = $(YOUR_APP_BUNDLE_IDENTIFIER)
+// PROVISIONING_PROFILE_SPECIFIER = $(YOUR_PROFILE_NAME)
+// ```
+
+// Default values, you can override it in `Local.xcconfig`.
+CODE_SIGN_STYLE = Manual
+CODE_SIGN_IDENTITY = iPhone Developer
+PRODUCT_BUNDLE_IDENTIFIER = at.niw.AlpacaChatApp
+
+#include? "Local.xcconfig"

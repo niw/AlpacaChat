@@ -1,0 +1,418 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5423912729C5D1840041C234 /* AlpacaChatApp.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5423912629C5D1840041C234 /* AlpacaChatApp.xcconfig */; };
+		54601CFB29C701F900E459DD /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54601CFA29C701F900E459DD /* ChatViewModel.swift */; };
+		54B223E629C5CF9F006F4683 /* AlpacaChatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B223E529C5CF9F006F4683 /* AlpacaChatApp.swift */; };
+		54B223E829C5CF9F006F4683 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B223E729C5CF9F006F4683 /* ChatView.swift */; };
+		54B223EA29C5CF9F006F4683 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 54B223E929C5CF9F006F4683 /* Assets.xcassets */; };
+		54B223ED29C5CF9F006F4683 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 54B223EC29C5CF9F006F4683 /* Preview Assets.xcassets */; };
+		54B223FC29C5D075006F4683 /* AlpacaChat in Frameworks */ = {isa = PBXBuildFile; productRef = 54B223FB29C5D075006F4683 /* AlpacaChat */; };
+		54B26D2F29C7D81A00A9AF05 /* model.bin in Resources */ = {isa = PBXBuildFile; fileRef = 54B26D2E29C7D81A00A9AF05 /* model.bin */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		5423912629C5D1840041C234 /* AlpacaChatApp.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = AlpacaChatApp.xcconfig; sourceTree = "<group>"; };
+		54601CFA29C701F900E459DD /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
+		54B223E229C5CF9F006F4683 /* AlpacaChatApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AlpacaChatApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		54B223E529C5CF9F006F4683 /* AlpacaChatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlpacaChatApp.swift; sourceTree = "<group>"; };
+		54B223E729C5CF9F006F4683 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		54B223E929C5CF9F006F4683 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		54B223EC29C5CF9F006F4683 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		54B223F629C5CFFA006F4683 /* AlpacaChat */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = AlpacaChat; path = ..; sourceTree = "<group>"; };
+		54B26D2D29C7CA7E00A9AF05 /* AlpacaChatApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AlpacaChatApp.entitlements; sourceTree = "<group>"; };
+		54B26D2E29C7D81A00A9AF05 /* model.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = model.bin; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		54B223DF29C5CF9F006F4683 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				54B223FC29C5D075006F4683 /* AlpacaChat in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5423912529C5D1530041C234 /* Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				5423912629C5D1840041C234 /* AlpacaChatApp.xcconfig */,
+			);
+			path = Configurations;
+			sourceTree = "<group>";
+		};
+		54B223D929C5CF9F006F4683 = {
+			isa = PBXGroup;
+			children = (
+				54B223E429C5CF9F006F4683 /* AlpacaChatApp */,
+				54B223F529C5CFFA006F4683 /* Packages */,
+				54B223E329C5CF9F006F4683 /* Products */,
+				54B223FA29C5D075006F4683 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		54B223E329C5CF9F006F4683 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				54B223E229C5CF9F006F4683 /* AlpacaChatApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		54B223E429C5CF9F006F4683 /* AlpacaChatApp */ = {
+			isa = PBXGroup;
+			children = (
+				5423912529C5D1530041C234 /* Configurations */,
+				54B223EB29C5CF9F006F4683 /* Preview Content */,
+				54B223F429C5CFC6006F4683 /* Resources */,
+				54B223F329C5CFBF006F4683 /* Sources */,
+				54B26D2C29C7CA6400A9AF05 /* Supporting Files */,
+			);
+			path = AlpacaChatApp;
+			sourceTree = "<group>";
+		};
+		54B223EB29C5CF9F006F4683 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				54B223EC29C5CF9F006F4683 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		54B223F329C5CFBF006F4683 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				54B223E529C5CF9F006F4683 /* AlpacaChatApp.swift */,
+				54B223E729C5CF9F006F4683 /* ChatView.swift */,
+				54601CFA29C701F900E459DD /* ChatViewModel.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		54B223F429C5CFC6006F4683 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				54B26D2E29C7D81A00A9AF05 /* model.bin */,
+				54B223E929C5CF9F006F4683 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		54B223F529C5CFFA006F4683 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				54B223F629C5CFFA006F4683 /* AlpacaChat */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		54B223FA29C5D075006F4683 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		54B26D2C29C7CA6400A9AF05 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				54B26D2D29C7CA7E00A9AF05 /* AlpacaChatApp.entitlements */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		54B223E129C5CF9F006F4683 /* AlpacaChatApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 54B223F029C5CF9F006F4683 /* Build configuration list for PBXNativeTarget "AlpacaChatApp" */;
+			buildPhases = (
+				54B223DE29C5CF9F006F4683 /* Sources */,
+				54B223DF29C5CF9F006F4683 /* Frameworks */,
+				54B223E029C5CF9F006F4683 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AlpacaChatApp;
+			packageProductDependencies = (
+				54B223FB29C5D075006F4683 /* AlpacaChat */,
+			);
+			productName = AlpacaChatApp;
+			productReference = 54B223E229C5CF9F006F4683 /* AlpacaChatApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		54B223DA29C5CF9F006F4683 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1430;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					54B223E129C5CF9F006F4683 = {
+						CreatedOnToolsVersion = 14.3;
+					};
+				};
+			};
+			buildConfigurationList = 54B223DD29C5CF9F006F4683 /* Build configuration list for PBXProject "AlpacaChatApp" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 54B223D929C5CF9F006F4683;
+			productRefGroup = 54B223E329C5CF9F006F4683 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				54B223E129C5CF9F006F4683 /* AlpacaChatApp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		54B223E029C5CF9F006F4683 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				54B223ED29C5CF9F006F4683 /* Preview Assets.xcassets in Resources */,
+				54B26D2F29C7D81A00A9AF05 /* model.bin in Resources */,
+				54B223EA29C5CF9F006F4683 /* Assets.xcassets in Resources */,
+				5423912729C5D1840041C234 /* AlpacaChatApp.xcconfig in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		54B223DE29C5CF9F006F4683 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				54B223E829C5CF9F006F4683 /* ChatView.swift in Sources */,
+				54601CFB29C701F900E459DD /* ChatViewModel.swift in Sources */,
+				54B223E629C5CF9F006F4683 /* AlpacaChatApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		54B223EE29C5CF9F006F4683 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		54B223EF29C5CF9F006F4683 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		54B223F129C5CF9F006F4683 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5423912629C5D1840041C234 /* AlpacaChatApp.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "AlpacaChatApp/Supporting Files/AlpacaChatApp.entitlements";
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"AlpacaChatApp/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		54B223F229C5CF9F006F4683 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5423912629C5D1840041C234 /* AlpacaChatApp.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "AlpacaChatApp/Supporting Files/AlpacaChatApp.entitlements";
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"AlpacaChatApp/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		54B223DD29C5CF9F006F4683 /* Build configuration list for PBXProject "AlpacaChatApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				54B223EE29C5CF9F006F4683 /* Debug */,
+				54B223EF29C5CF9F006F4683 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		54B223F029C5CF9F006F4683 /* Build configuration list for PBXNativeTarget "AlpacaChatApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				54B223F129C5CF9F006F4683 /* Debug */,
+				54B223F229C5CF9F006F4683 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		54B223FB29C5D075006F4683 /* AlpacaChat */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AlpacaChat;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 54B223DA29C5CF9F006F4683 /* Project object */;
+}
