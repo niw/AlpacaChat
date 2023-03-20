@@ -8,52 +8,72 @@
 import AlpacaChat
 import Foundation
 
-struct ChatMessage: Identifiable {
-    var id: UUID
-    var sender: String
-    var text: String
+extension String: Error {
 }
 
 @MainActor
 final class ChatViewModel: ObservableObject {
+    struct Message: Identifiable {
+        enum Sender {
+            case user
+            case system
+        }
+
+        var id = UUID()
+        var sender: Sender
+        var isLoading: Bool = false
+        var text: String
+    }
+
     private var chat: Chat?
 
     @Published
     var isLoading: Bool = false
 
     @Published
-    var messages: [ChatMessage] = []
+    var messages: [Message] = []
 
-    func prepare() async throws {
-        isLoading = true
-
+    func prepare() async {
         guard chat == nil else {
             return
         }
 
-        guard let modelURL = Bundle.main.url(forResource: "model", withExtension: "bin") else {
-            return
+        do {
+            isLoading = true
+            guard let modelURL = Bundle.main.url(forResource: "model", withExtension: "bin") else {
+                throw "Model not found."
+            }
+            let model = try await Model.load(from: modelURL)
+            chat = Chat(model: model)
+        } catch {
+            let message = Message(sender: .system, text: "Failed to load model.")
+            messages.append(message)
         }
-        let model = try await Model.load(from: modelURL)
-        chat = Chat(model: model)
-
         isLoading = false
     }
 
-    func sendMessage(sender: String, text: String) async throws {
-        let message = ChatMessage(id: UUID(), sender: sender, text: text)
-        messages.append(message)
+    func send(message text: String) async {
+        let requestMessage = Message(sender: .user, text: text)
+        messages.append(requestMessage)
 
         guard let chat = chat else {
+            let message = Message(sender: .system, text: "Chat is unavailable.")
+            messages.append(message)
             return
         }
 
-        var replyText = ""
-        for try await token in chat.predictTokens(for: text) {
-            replyText += token
+        do {
+            var responseMessage = Message(sender: .system, isLoading: true, text: "")
+            messages.append(responseMessage)
+            let responseMessageIndex = messages.endIndex - 1
+            for try await token in chat.predictTokens(for: text) {
+                responseMessage.isLoading = false
+                responseMessage.text += token
+                messages[responseMessageIndex] = responseMessage
+            }
+        } catch {
+            let message = Message(sender: .system, text: error.localizedDescription)
+            messages.append(message)
         }
-
-        let reply = ChatMessage(id: UUID(), sender: "Alpaca", text: replyText)
-        messages.append(reply)
     }
 }
