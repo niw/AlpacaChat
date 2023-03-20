@@ -18,7 +18,9 @@ NS_ENUM(NSUInteger, ALPChatModelErrorCode) {
 
 @interface ALPChatModel : NSObject
 
-+ (nullable ALPChatModel *)loadFromURL:(NSURL *)URL error:(NSError * _Nullable * _Nullable)error;
++ (nullable ALPChatModel *)loadFromURL:(NSURL *)URL
+                           contextSize:(int)contextSize
+                                 error:(NSError * _Nullable * _Nullable)error;
 
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;

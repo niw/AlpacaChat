@@ -22,13 +22,14 @@ NSString * const ALPChatModelErrorDomain = @"ALPChatModelErrorDomain";
     gpt_vocab _vocab;
 }
 
-+ (ALPChatModel *)loadFromURL:(NSURL *)URL error:(NSError **)error
++ (ALPChatModel *)loadFromURL:(NSURL *)URL
+                  contextSize:(int)contextSize
+                        error:(NSError **)error
 {
     gpt_vocab vocab;
     llama_model model;
 
-    // FIXME: Inject n_ctx (Fixed to 128 here,) by adding new param object.
-    if (!llama_model_load(URL.fileSystemRepresentation, model, vocab, 128)) {
+    if (!llama_model_load(URL.fileSystemRepresentation, model, vocab, contextSize)) {
         if (error) {
             NSString * const failureReason = [[NSString alloc] initWithFormat:@"failed to load model: %@", URL];
             NSDictionary * const userInfo = @{

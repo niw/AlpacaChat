@@ -12,8 +12,8 @@ public struct Model {
     var model: ALPChatModel
 
     @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-    public static func load(from url: URL) async throws -> Self {
-        let model = try ALPChatModel.load(from: url)
+    public static func load(from url: URL, contextSize: Int32 = 512) async throws -> Self {
+        let model = try ALPChatModel.load(from: url, contextSize: contextSize)
         return Model(model: model)
     }
 }
