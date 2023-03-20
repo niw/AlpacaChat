@@ -287,16 +287,21 @@ NSString * const ALPChatErrorDomain = @"ALPChatErrorDomain";
         {
 #else
         if (is_input_tokens_consumed) {
-#endif
+#endif // DEBUG
             for (auto ident : _embd) {
                 const char *tokenCString = _model->_vocab.id_to_token[ident].c_str();
 #if DEBUG
                 printf("%s", tokenCString);
+
+                if (is_input_tokens_consumed) {
 #endif // DEBUG
-                if (tokenHandler) {
-                    NSString * const tokenString = [[NSString alloc] initWithUTF8String:tokenCString];
-                    tokenHandler(tokenString);
+                    if (tokenHandler) {
+                        NSString * const tokenString = [[NSString alloc] initWithUTF8String:tokenCString];
+                        tokenHandler(tokenString);
+                    }
+#if DEBUG
                 }
+#endif // DEBUG
             }
 #if DEBUG
             fflush(stdout);
