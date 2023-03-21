@@ -36,20 +36,36 @@ Place it in `/Applications/AlpacaChatApp/Resouces/model.bin` for example,
 and build app and run it.
 
 
-Applications
-------------
+Usage
+-----
 
 See actual command line and SwiftUI application for usages.
 
-- `/Applications/AlpacaChatCLI`
 
-    A command line chat app that can run on macOS.
+Applications
+------------
 
-- `/Applications/AlpacaChatApp.xcodeproj`
+### `/Applications/AlpacaChatCLI`
 
-    An SwiftUI chat app that can run on iOS devices with large memory, such as iPad Pro.
-    To build app runs on actual device, you need to create your own AppID
-    and provisioning profile that allows extended memory usage with
-    an entitlement.
-    Place `/Applications/AlpacaChatApp/Configurations/Local.xcconfig`
-    to provide these your local development configurations for sining.
+A command line chat app that can run on macOS.
+
+To build, use Xcode or simply use `swift` command.
+
+```
+$ cd Applications/AlpacaChatCLI
+$ swift build -c release
+$ .build/release/AlpacaChatCLI -m /path/to/model.bin
+```
+
+### `/Applications/AlpacaChatApp.xcodeproj`
+
+A SwiftUI chat app that can run on iOS devices with large memory, such as iPad Pro.
+
+To build app runs on actual device, you need to create your own AppID
+and provisioning profile that allows extended memory usage with
+an entitlement.
+
+Place `/Applications/AlpacaChatApp/Configurations/Local.xcconfig`
+to provide these your local development configurations for signing.
+
+You may want to change scheme to use Release configuration for Run, or it may be seriously slow.
