@@ -11,22 +11,8 @@ import Foundation
 extension String: Error {
 }
 
-struct Message: Identifiable {
-    enum Sender {
-        case user
-        case system
-    }
-
-    var id = UUID()
-    var sender: Sender
-    var isLoading: Bool = false
-    var text: String
-}
-
 @MainActor
 final class ChatViewModel: ObservableObject {
-
-
     private var chat: Chat?
 
     @Published

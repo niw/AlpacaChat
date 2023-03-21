@@ -15,6 +15,8 @@
 		54B223ED29C5CF9F006F4683 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 54B223EC29C5CF9F006F4683 /* Preview Assets.xcassets */; };
 		54B223FC29C5D075006F4683 /* AlpacaChat in Frameworks */ = {isa = PBXBuildFile; productRef = 54B223FB29C5D075006F4683 /* AlpacaChat */; };
 		54B26D2F29C7D81A00A9AF05 /* model.bin in Resources */ = {isa = PBXBuildFile; fileRef = 54B26D2E29C7D81A00A9AF05 /* model.bin */; };
+		54E9B23829C97AEC00958DFE /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E9B23629C97AEC00958DFE /* Message.swift */; };
+		54E9B23929C97AEC00958DFE /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E9B23729C97AEC00958DFE /* MessageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +30,8 @@
 		54B223F629C5CFFA006F4683 /* AlpacaChat */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = AlpacaChat; path = ..; sourceTree = "<group>"; };
 		54B26D2D29C7CA7E00A9AF05 /* AlpacaChatApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AlpacaChatApp.entitlements; sourceTree = "<group>"; };
 		54B26D2E29C7D81A00A9AF05 /* model.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = model.bin; sourceTree = "<group>"; };
+		54E9B23629C97AEC00958DFE /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		54E9B23729C97AEC00958DFE /* MessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +98,8 @@
 				54B223E529C5CF9F006F4683 /* AlpacaChatApp.swift */,
 				54B223E729C5CF9F006F4683 /* ChatView.swift */,
 				54601CFA29C701F900E459DD /* ChatViewModel.swift */,
+				54E9B23629C97AEC00958DFE /* Message.swift */,
+				54E9B23729C97AEC00958DFE /* MessageView.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -205,7 +211,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				54E9B23929C97AEC00958DFE /* MessageView.swift in Sources */,
 				54B223E829C5CF9F006F4683 /* ChatView.swift in Sources */,
+				54E9B23829C97AEC00958DFE /* Message.swift in Sources */,
 				54601CFB29C701F900E459DD /* ChatViewModel.swift in Sources */,
 				54B223E629C5CF9F006F4683 /* AlpacaChatApp.swift in Sources */,
 			);
