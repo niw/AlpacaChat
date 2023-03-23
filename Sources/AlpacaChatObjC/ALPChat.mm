@@ -144,6 +144,11 @@ NSString * const ALPChatErrorDomain = @"ALPChatErrorDomain";
 {
     // Use mostly default values.
     _params.temp = 0.1f;
+    _params.n_threads = (int32_t)std::thread::hardware_concurrency();
+#if DEBUG
+    fprintf(stderr, "%s: hardware concurrency = %d\n", __func__, (int32_t) std::thread::hardware_concurrency());
+    fprintf(stderr, "%s: n_threads = %d\n", __func__, _params.n_threads);
+#endif // DEBUG
 
     const int32_t seed = (int32_t)time(NULL);
     _rng = std::mt19937(seed);
