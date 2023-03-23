@@ -15,9 +15,12 @@ struct Command: AsyncParsableCommand {
     @Option(name: .shortAndLong, help: "Path to model file.")
     var modelPath: String
 
+    @Option(name: .shortAndLong, help: "Context size.")
+    var contextSize: Int32 = 2048
+
     mutating func run() async throws {
         let modelURL = URL(fileURLWithPath: modelPath)
-        let model = try await Model.load(from: modelURL)
+        let model = try await Model.load(from: modelURL, contextSize: contextSize)
         let chat = Chat(model: model)
 
         while true {
