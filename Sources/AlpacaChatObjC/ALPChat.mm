@@ -110,7 +110,7 @@ NSString * const ALPChatErrorDomain = @"ALPChatErrorDomain";
     int _n_past;
     int _n_remaining_tokens;
 
-    std::vector<gpt_vocab::id> _initial_tokens;
+    //std::vector<gpt_vocab::id> _initial_tokens;
     std::vector<gpt_vocab::id> _request_tokens;
     std::vector<gpt_vocab::id> _response_tokens;
 
@@ -145,6 +145,11 @@ NSString * const ALPChatErrorDomain = @"ALPChatErrorDomain";
 {
     // Use mostly default values.
     _params.temp = 0.1f;
+    _params.n_threads = (int32_t)std::thread::hardware_concurrency();
+#if DEBUG
+    fprintf(stderr, "%s: hardware concurrency = %d\n", __func__, (int32_t) std::thread::hardware_concurrency());
+    fprintf(stderr, "%s: n_threads = %d\n", __func__, _params.n_threads);
+#endif // DEBUG
 
     const int32_t seed = (int32_t)time(NULL);
     _rng = std::mt19937(seed);
@@ -152,7 +157,7 @@ NSString * const ALPChatErrorDomain = @"ALPChatErrorDomain";
     _n_past = 0;
     _n_remaining_tokens = 0;
 
-    _initial_tokens = ::llama_tokenize(_model->_vocab, " Below is an instruction that describes a task. Write a response that appropriately completes the request.\n\n", true);
+    //_initial_tokens = ::llama_tokenize(_model->_vocab, " Below is an instruction that describes a task. Write a response that appropriately completes the request.\n\n", true);
     _request_tokens = ::llama_tokenize(_model->_vocab, "## Instruction:\n\n", true);
     _response_tokens = ::llama_tokenize(_model->_vocab, "\n## Response:\n\n", false);
 
@@ -187,11 +192,11 @@ NSString * const ALPChatErrorDomain = @"ALPChatErrorDomain";
         llama_eval(_model->_model, _params.n_threads, 0, { 0, 1, 2, 3 }, _logits, _mem_per_token);
 
         // Add the initial instruction.
-        input_tokens.insert(input_tokens.end(), _initial_tokens.begin(), _initial_tokens.end());
+        //input_tokens.insert(input_tokens.end(), _initial_tokens.begin(), _initial_tokens.end());
 
         // We may want to slide the input window along with the context,
         // but for now we restrict to the context length.
-        _n_remaining_tokens = _model->_model.hparams.n_ctx - (int)input_tokens.size();
+        _n_remaining_tokens = _model->_model.hparams.n_ctx; // - (int)input_tokens.size();
 
         _prepared = true;
     }
@@ -225,6 +230,7 @@ NSString * const ALPChatErrorDomain = @"ALPChatErrorDomain";
         // Predict
         if (_embd.size() > 0) {
 #if DEBUG
+            const int64_t t_start_sample_us = ggml_time_us();
             fprintf(stderr, "start predicting...\n");
 #endif // DEBUG
             if (!llama_eval(_model->_model, _params.n_threads, _n_past, _embd, _logits, _mem_per_token)) {
@@ -237,7 +243,7 @@ NSString * const ALPChatErrorDomain = @"ALPChatErrorDomain";
                 return;
             }
 #if DEBUG
-            fprintf(stderr, "done\n");
+            fprintf(stderr, "done %8.2f ms\n", (ggml_time_us() - t_start_sample_us) / 1000.0f);
 #endif // DEBUG
         }
 
