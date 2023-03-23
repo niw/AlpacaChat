@@ -59,7 +59,7 @@ $ .build/release/AlpacaChatCLI -m /path/to/model.bin
 
 ### `/Applications/AlpacaChatApp.xcodeproj`
 
-A SwiftUI chat app that can run on iOS devices with large memory, such as iPad Pro.
+A SwiftUI chat app that can run on iOS devices.
 
 To build app runs on actual device, you need to create your own AppID
 and provisioning profile that allows extended memory usage with
@@ -68,4 +68,5 @@ an entitlement.
 Place `/Applications/AlpacaChatApp/Configurations/Local.xcconfig`
 to provide these your local development configurations for signing.
 
-You may want to change scheme to use Release configuration for Run, or it may be seriously slow.
+You may want to change scheme to use Release configuration for Run,
+or it may be seriously slow.
