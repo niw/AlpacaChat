@@ -225,6 +225,7 @@ NSString * const ALPChatErrorDomain = @"ALPChatErrorDomain";
         // Predict
         if (_embd.size() > 0) {
 #if DEBUG
+            const int64_t t_start_sample_us = ggml_time_us();
             fprintf(stderr, "start predicting...\n");
 #endif // DEBUG
             if (!llama_eval(_model->_model, _params.n_threads, _n_past, _embd, _logits, _mem_per_token)) {
@@ -237,7 +238,7 @@ NSString * const ALPChatErrorDomain = @"ALPChatErrorDomain";
                 return;
             }
 #if DEBUG
-            fprintf(stderr, "done\n");
+            fprintf(stderr, "done %8.2f ms\n", (ggml_time_us() - t_start_sample_us) / 1000.0f);
 #endif // DEBUG
         }
 
