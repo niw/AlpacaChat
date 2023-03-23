@@ -24,12 +24,19 @@ NSString * const ALPChatModelErrorDomain = @"ALPChatModelErrorDomain";
 
 + (ALPChatModel *)loadFromURL:(NSURL *)URL
                   contextSize:(int)contextSize
+                  isLowMemory:(BOOL)isLowMemory
                         error:(NSError **)error
 {
     gpt_vocab vocab;
     llama_model model;
 
-    if (!llama_model_load(URL.fileSystemRepresentation, model, vocab, contextSize)) {
+    bool success = false;
+    if (isLowMemory) {
+        success = llama_model_load_lowmem(URL.fileSystemRepresentation, model, vocab, contextSize);
+    } else {
+        success = llama_model_load(URL.fileSystemRepresentation, model, vocab, contextSize);
+    }
+    if (!success) {
         if (error) {
             NSString * const failureReason = [[NSString alloc] initWithFormat:@"failed to load model: %@", URL];
             NSDictionary * const userInfo = @{

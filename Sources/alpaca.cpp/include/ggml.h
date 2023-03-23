@@ -356,6 +356,20 @@ struct ggml_tensor * ggml_new_tensor_1d(
         enum   ggml_type type,
         int    ne0);
 
+
+struct ggml_tensor * ggml_new_tensor_1d_dummy(
+        struct ggml_context * ctx,
+        enum   ggml_type type,
+        int    ne0);
+
+
+struct ggml_tensor * ggml_new_tensor_2d_dummy(
+        struct ggml_context * ctx,
+        enum   ggml_type type,
+        int    ne0,
+        int    ne1);
+
+
 struct ggml_tensor * ggml_new_tensor_2d(
         struct ggml_context * ctx,
         enum   ggml_type type,

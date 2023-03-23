@@ -152,7 +152,7 @@ typedef double ggml_float;
 #undef bool
 #define bool _Bool
 #else
-#include <immintrin.h>
+//#include <immintrin.h>
 #endif
 #endif
 
@@ -2602,7 +2602,7 @@ struct ggml_tensor * ggml_new_tensor_impl(
         /*.pad          =*/ { 0 },
     };
 
-    ggml_assert_aligned(result->data);
+    //ggml_assert_aligned(result->data);
 
     for (int i = 0; i < n_dims; i++) {
         result->ne[i] = ne[i];
@@ -2641,6 +2641,22 @@ struct ggml_tensor * ggml_new_tensor_2d(
         int    ne1) {
     const int ne[2] = { ne0, ne1 };
     return ggml_new_tensor(ctx, type, 2, ne);
+}
+
+struct ggml_tensor * ggml_new_tensor_2d_dummy(
+        struct ggml_context * ctx,
+        enum   ggml_type type,
+        int    ne0,
+        int    ne1) {
+    const int ne[2] = { ne0, ne1 };
+    return ggml_new_tensor_impl(ctx, type, 2, ne, (void*)1); //1 is dummy address
+}
+
+struct ggml_tensor * ggml_new_tensor_1d_dummy(
+        struct ggml_context * ctx,
+        enum   ggml_type type,
+        int    ne0) {
+    return ggml_new_tensor_impl(ctx, type, 1, &ne0, (void*)1); //1 is dummy address
 }
 
 struct ggml_tensor * ggml_new_tensor_3d(
@@ -4954,9 +4970,11 @@ static void ggml_compute_forward_repeat_f32(
     for (int i = 0; i < nrr; i++) {
         for (int j = 0; j < ncr; j++) {
             for (int k = 0; k < nr0; k++) {
-                ggml_vec_cpy_f32(nc0,
-                        (float *) ((char *)  dst->data + (i*nr0 + k)*( dst->nb[1]) + j*nc0*( dst->nb[0])),
-                        (float *) ((char *) src0->data + (        k)*(src0->nb[1])));
+//                ggml_vec_cpy_f32(nc0,
+//                        (float *) ((char *)  dst->data + (i*nr0 + k)*( dst->nb[1]) + j*nc0*( dst->nb[0])),
+//                        (float *) ((char *) src0->data + (        k)*(src0->nb[1])));
+                memcpy(((char *)  dst->data + (i*nr0 + k)*( dst->nb[1]) + j*nc0*( dst->nb[0])), \
+                      ((char *) src0->data + (        k)*(src0->nb[1])), nc0*sizeof(float));
             }
         }
     }

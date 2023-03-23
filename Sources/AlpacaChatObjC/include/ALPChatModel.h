@@ -20,6 +20,7 @@ NS_ENUM(NSUInteger, ALPChatModelErrorCode) {
 
 + (nullable ALPChatModel *)loadFromURL:(NSURL *)URL
                            contextSize:(int)contextSize
+                           isLowMemory:(BOOL)isLowMemory
                                  error:(NSError * _Nullable * _Nullable)error;
 
 - (instancetype)init NS_UNAVAILABLE;

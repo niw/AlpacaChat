@@ -69,6 +69,11 @@ bool llama_model_load(const std::string &fname,
                       gpt_vocab &vocab,
                       int n_ctx);
 
+bool llama_model_load_lowmem(const std::string &fname,
+                             llama_model &model,
+                             gpt_vocab &vocab,
+                             int n_ctx);
+
 bool llama_eval(const llama_model &model,
                 const int n_threads,
                 const int n_past,
