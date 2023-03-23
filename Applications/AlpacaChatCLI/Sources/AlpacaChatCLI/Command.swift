@@ -14,13 +14,14 @@ import Darwin
 struct Command: AsyncParsableCommand {
     @Option(name: .shortAndLong, help: "Path to model file.")
     var modelPath: String
-
     @Option(name: .shortAndLong, help: "Context size.")
     var contextSize: Int32 = 2048
+    @Flag(name: .shortAndLong, help: "Use low memory model loading.")
+    var lowMemory: Bool = false
 
     mutating func run() async throws {
         let modelURL = URL(fileURLWithPath: modelPath)
-        let model = try await Model.load(from: modelURL, contextSize: contextSize)
+        let model = try await Model.load(from: modelURL, contextSize: contextSize, isLowMemory: lowMemory)
         let chat = Chat(model: model)
 
         while true {
