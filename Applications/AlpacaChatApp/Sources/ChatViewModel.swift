@@ -7,6 +7,7 @@
 
 import AlpacaChat
 import Foundation
+import os
 
 extension String: Error {
 }
@@ -31,7 +32,23 @@ final class ChatViewModel: ObservableObject {
             guard let modelURL = Bundle.main.url(forResource: "model", withExtension: "bin") else {
                 throw "Model not found."
             }
-            let model = try await Model.load(from: modelURL)
+
+            let contextSize: Int32
+            let isLowMemory: Bool
+#if targetEnvironment(simulator)
+            contextSize = 2048
+            isLowMemory = false
+#else
+            let memorySize = os_proc_available_memory()
+            if memorySize > 6 * 1024 * 1024 * 1024 {
+                contextSize = 2048
+                isLowMemory = false
+            } else {
+                contextSize = 512
+                isLowMemory = true
+            }
+#endif
+            let model = try await Model.load(from: modelURL, contextSize: contextSize, isLowMemory: isLowMemory)
             chat = Chat(model: model)
         } catch {
             let message = Message(sender: .system, text: "Failed to load model.")
