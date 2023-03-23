@@ -40,17 +40,23 @@ static int fin_init(const char* fname)
     int fd, nread;
     struct stat sb;
     if((fd = open(fname, O_RDONLY)) < 0){
+#if DEBUG
         printf("mmap open %s failed\n", fname);
+#endif // DEBUG
         return -1;
     }
     if((fstat(fd, &sb)) == -1 ){
+#if DEBUG
         printf("fstat failed\n");
+#endif // DEBUG
         return -1;
     }
     char* model_buf = (char*)mmap(\
         NULL, sb.st_size, PROT_READ, MAP_SHARED, fd, 0); //MAP_SHARED, MAP_PRIVATE
     if((void*)model_buf ==(void*) -1){
+#if DEBUG
         printf("mmap failed\n");
+#endif // DEBUG
         close(fd);
         return -1;
     }
@@ -59,7 +65,9 @@ static int fin_init(const char* fname)
     mbuf.size = (size_t)sb.st_size;
     mbuf.p =  mbuf.buf;
     mbuf.oft = 0;
+#if DEBUG
     printf("mmap 0x%lx~0x%lx, size=0x%lx\r\n", (size_t)(model_buf), (size_t)(model_buf+mbuf.size), mbuf.size);
+#endif // DEBUG
     return 0;
 }
 
