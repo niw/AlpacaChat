@@ -169,6 +169,8 @@
 //
 //
 
+#define GGML_USE_ACCELERATE
+
 #ifdef  __cplusplus
 extern "C" {
 #endif
