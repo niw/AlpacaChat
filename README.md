@@ -4,6 +4,8 @@ AlpacaChat
 A Swift library that runs Alpaca-LoRA prediction locally
 to implement ChatGPT like app on Apple platform devices.
 
+![AlpacaChat](Resources/AlpacaChat.png)
+
 It is basically a wrapper for [alpaca.cpp](https://github.com/antimatter15/alpaca.cpp)
 that provides a simple Swift API for it.
 
