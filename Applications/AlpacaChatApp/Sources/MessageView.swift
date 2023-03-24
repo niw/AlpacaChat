@@ -16,11 +16,11 @@ struct MessageView: View {
         case .user:
             Text("You")
                 .font(.caption)
-                .foregroundColor(.secondary)
+                .foregroundColor(.accentColor)
         case .system:
             Text("Alpaca")
                 .font(.caption)
-                .foregroundColor(.secondary)
+                .foregroundColor(.accentColor)
         }
     }
 

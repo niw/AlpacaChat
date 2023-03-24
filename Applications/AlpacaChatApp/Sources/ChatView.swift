@@ -37,7 +37,7 @@ struct ChatView: View {
                             await viewModel.send(message: text)
                         }
                     } label: {
-                        Image(systemName: "paperplane")
+                        Image(systemName: "arrow.up.circle.fill")
                     }
                     .padding(.horizontal, 6.0)
                     .disabled(inputText.isEmpty)
