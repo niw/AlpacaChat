@@ -40,6 +40,7 @@ struct ChatView: View {
                         Image(systemName: "paperplane")
                     }
                     .padding(.horizontal, 6.0)
+                    .disabled(inputText.isEmpty)
                 }
             }
             .padding(.all)
