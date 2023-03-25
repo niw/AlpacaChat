@@ -69,7 +69,7 @@ NSString * const ALPChatModelErrorDomain = @"ALPChatModelErrorDomain";
 
 - (void)dealloc
 {
-    ggml_free(_model.ctx);
+    llma_model_unload(_model);
 }
 
 @end

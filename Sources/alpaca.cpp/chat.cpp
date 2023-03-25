@@ -26,16 +26,7 @@ static const std::map<int, int> LLAMA_N_PARTS = {
     { 8192, 8 },
 };
 
-typedef struct{
-    char* buf;
-    size_t size;
-    char* p;
-    size_t oft;
-} buf_t;
-
-static buf_t mbuf;
-
-static int fin_init(const char* fname)
+static int fin_init(mbuf_t& mbuf, const char* fname)
 {
     int fd, nread;
     struct stat sb;
@@ -71,7 +62,7 @@ static int fin_init(const char* fname)
     return 0;
 }
 
-static void fin_read(char* dst, size_t len)
+static void fin_read(mbuf_t& mbuf, char* dst, size_t len)
 {
     if(mbuf.oft+len>mbuf.size){
         len = mbuf.size - mbuf.oft;
@@ -79,10 +70,10 @@ static void fin_read(char* dst, size_t len)
     memcpy(dst, mbuf.p, len);
     mbuf.oft+=len;
     mbuf.p+=len;
-    return;
+    return true;
 }
 
-static void fin_read_dummy(char** dst, size_t len)
+static void fin_read_dummy(mbuf_t& mbuf, char** dst, size_t len)
 {
     if(mbuf.oft+len>mbuf.size){
         len = mbuf.size - mbuf.oft;
@@ -91,34 +82,42 @@ static void fin_read_dummy(char** dst, size_t len)
     *dst = mbuf.p;
     mbuf.oft+=len;
     mbuf.p+=len;
-    return;
+    return true;
 }
 
-static size_t fin_tellg(void)
+static size_t fin_tellg(mbuf_t& mbuf)
 {
     return mbuf.oft;
 }
 
-static void fin_seekg(size_t oft)
+static void fin_seekg(mbuf_t& mbuf, size_t oft)
 {
     mbuf.oft = oft;
     mbuf.p = mbuf.buf + oft;
     return;
 }
 
-static bool fin_eof(void)
+static bool fin_eof(mbuf_t& mbuf)
 {
     return mbuf.oft>=mbuf.size;
 }
 
-static void fin_close(void)
+static void fin_close(mbuf_t& mbuf)
 {
+    if (!mbuf.buf) {
+        return;
+    }
     munmap(mbuf.buf, mbuf.size);
     mbuf.buf = NULL;
     mbuf.size = 0;
     mbuf.p =  NULL;
     mbuf.oft = 0;
-    return;
+}
+
+void llma_model_unload(llama_model &model)
+{
+    ggml_free(model.ctx);
+    fin_close(model.mbuf);
 }
 
 // load the model's weights from a file, use mmap to save memory
@@ -131,13 +130,14 @@ bool llama_model_load_lowmem(const std::string & fname, llama_model & model, gpt
     fprintf(stderr, "ARM_FMA= %d\n", ggml_cpu_has_arm_fma());
 #endif // DEBUG
     std::vector<char> f_buf(1024*1024);
-    int res=fin_init(fname.c_str());
+
+    int res=fin_init(model.mbuf, fname.c_str());
     if(res) return false;
 
     // verify magic
     {
         uint32_t magic;
-        fin_read((char *) &magic, sizeof(magic));
+        fin_read(model.mbuf, (char *) &magic, sizeof(magic));
         if (magic != 0x67676d6c) {
 #if DEBUG
             fprintf(stderr, "%s: invalid model file '%s' (bad magic)\n", __func__, fname.c_str());
@@ -153,14 +153,14 @@ bool llama_model_load_lowmem(const std::string & fname, llama_model & model, gpt
     {
         auto & hparams = model.hparams;
 
-        fin_read((char *) &hparams.n_vocab, sizeof(hparams.n_vocab));
+        fin_read(model.mbuf, (char *) &hparams.n_vocab, sizeof(hparams.n_vocab));
         //fin_read((char *) &hparams.n_ctx,   sizeof(hparams.n_ctx));
-        fin_read((char *) &hparams.n_embd,  sizeof(hparams.n_embd));
-        fin_read((char *) &hparams.n_mult,  sizeof(hparams.n_mult));
-        fin_read((char *) &hparams.n_head,  sizeof(hparams.n_head));
-        fin_read((char *) &hparams.n_layer, sizeof(hparams.n_layer));
-        fin_read((char *) &hparams.n_rot,   sizeof(hparams.n_rot));
-        fin_read((char *) &hparams.f16,     sizeof(hparams.f16));
+        fin_read(model.mbuf, (char *) &hparams.n_embd,  sizeof(hparams.n_embd));
+        fin_read(model.mbuf, (char *) &hparams.n_mult,  sizeof(hparams.n_mult));
+        fin_read(model.mbuf, (char *) &hparams.n_head,  sizeof(hparams.n_head));
+        fin_read(model.mbuf, (char *) &hparams.n_layer, sizeof(hparams.n_layer));
+        fin_read(model.mbuf, (char *) &hparams.n_rot,   sizeof(hparams.n_rot));
+        fin_read(model.mbuf, (char *) &hparams.f16,     sizeof(hparams.f16));
 
         hparams.n_ctx = n_ctx;
 
@@ -196,10 +196,10 @@ bool llama_model_load_lowmem(const std::string & fname, llama_model & model, gpt
         std::string word;
         for (int i = 0; i < n_vocab; i++) {
             uint32_t len;
-            fin_read((char *) &len, sizeof(len));
+            fin_read(model.mbuf, (char *) &len, sizeof(len));
 
             word.resize(len);
-            fin_read((char *) word.data(), len);
+            fin_read(model.mbuf, (char *) word.data(), len);
 
             vocab.token_to_id[word] = i;
             vocab.id_to_token[i] = word;
@@ -363,7 +363,7 @@ bool llama_model_load_lowmem(const std::string & fname, llama_model & model, gpt
 #endif // DEBUG
     }
 
-    const size_t file_offset = fin_tellg();
+    const size_t file_offset = fin_tellg(model.mbuf);
 
     //fin_close();
 
@@ -379,7 +379,7 @@ bool llama_model_load_lowmem(const std::string & fname, llama_model & model, gpt
         }
 
         //fin_init(fname_part.c_str());
-        fin_seekg(file_offset);
+        fin_seekg(model.mbuf, file_offset);
 
         // load weights
         {
@@ -395,23 +395,23 @@ bool llama_model_load_lowmem(const std::string & fname, llama_model & model, gpt
                 int32_t length;
                 int32_t ftype;
 
-                fin_read(reinterpret_cast<char *>(&n_dims), sizeof(n_dims));
-                fin_read(reinterpret_cast<char *>(&length), sizeof(length));
-                fin_read(reinterpret_cast<char *>(&ftype),  sizeof(ftype));
+                fin_read(model.mbuf, reinterpret_cast<char *>(&n_dims), sizeof(n_dims));
+                fin_read(model.mbuf, reinterpret_cast<char *>(&length), sizeof(length));
+                fin_read(model.mbuf, reinterpret_cast<char *>(&ftype),  sizeof(ftype));
 
-                if (fin_eof()) {
+                if (fin_eof(model.mbuf)) {
                     break;
                 }
 
                 int32_t nelements = 1;
                 int32_t ne[2] = { 1, 1 };
                 for (int i = 0; i < n_dims; ++i) {
-                    fin_read(reinterpret_cast<char *>(&ne[i]), sizeof(ne[i]));
+                    fin_read(model.mbuf, reinterpret_cast<char *>(&ne[i]), sizeof(ne[i]));
                     nelements *= ne[i];
                 }
 
                 std::string name(length, 0);
-                fin_read(&name[0], length);
+                fin_read(model.mbuf, &name[0], length);
 
                 if (model.tensors.find(name.data()) == model.tensors.end()) {
 #if DEBUG
@@ -535,10 +535,10 @@ bool llama_model_load_lowmem(const std::string & fname, llama_model & model, gpt
                         //fin_read(reinterpret_cast<char *>(tensor->data), ggml_nbytes(tensor));
                         //fin_read_dummy((char**)&tensor->data, ggml_nbytes(tensor));
                         size_t len = ggml_nbytes(tensor);
-                        fin_read_dummy((char**)&tensor->data, len);
+                        fin_read_dummy(model.mbuf, (char**)&tensor->data, len);
 
                     } else {
-                        fin_seekg(ggml_nbytes(tensor));
+                        fin_seekg(model.mbuf, ggml_nbytes(tensor));
                     }
 
                     total_size += ggml_nbytes(tensor);
@@ -560,7 +560,7 @@ bool llama_model_load_lowmem(const std::string & fname, llama_model & model, gpt
                         for (int i1 = 0; i1 < ne[1]; ++i1) {
                             const size_t offset_row = i1*row_size;
                             const size_t offset = offset_row + ((part_id*np0)/ggml_blck_size(tensor->type))*ggml_type_size(tensor->type);
-                            fin_read(reinterpret_cast<char *>(tensor->data) + offset, row_size/n_parts);
+                            fin_read(model.mbuf, reinterpret_cast<char *>(tensor->data) + offset, row_size/n_parts);
                         }
                     } else {
                         const int np1 = ne[1];
@@ -569,7 +569,7 @@ bool llama_model_load_lowmem(const std::string & fname, llama_model & model, gpt
 
                         for (int i1 = 0; i1 < ne[1]; ++i1) {
                             const size_t offset_row = (i1 + part_id*np1)*row_size;
-                            fin_read(reinterpret_cast<char *>(tensor->data) + offset_row, row_size);
+                            fin_read(model.mbuf, reinterpret_cast<char *>(tensor->data) + offset_row, row_size);
                         }
                     }
 

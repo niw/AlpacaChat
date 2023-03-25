@@ -45,6 +45,15 @@ struct llama_layer {
     struct ggml_tensor * w3;
 };
 
+struct mbuf_t {
+    mbuf_t(): buf(nullptr), size(0), p(nullptr), oft(0) {};
+
+    char* buf;
+    size_t size;
+    char* p;
+    size_t oft;
+};
+
 struct llama_model {
     llama_hparams hparams;
 
@@ -62,7 +71,11 @@ struct llama_model {
     //
     struct ggml_context * ctx;
     std::map<std::string, struct ggml_tensor *> tensors;
+
+    mbuf_t mbuf;
 };
+
+void llma_model_unload(llama_model &model);
 
 bool llama_model_load(const std::string &fname,
                       llama_model &model,
