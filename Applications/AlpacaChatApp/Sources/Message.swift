@@ -8,6 +8,14 @@
 import Foundation
 
 struct Message: Identifiable {
+    enum State {
+        case none
+        case error
+        case typed
+        case predicting
+        case predicted(tokensPerSeconds: Double)
+    }
+
     enum Sender {
         case user
         case system
@@ -15,6 +23,6 @@ struct Message: Identifiable {
 
     var id = UUID()
     var sender: Sender
-    var isLoading: Bool = false
+    var state: State = .none
     var text: String
 }

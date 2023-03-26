@@ -23,11 +23,12 @@ struct ChatView: View {
                    .listRowSeparator(.hidden)
             }
             HStack {
-                if viewModel.isLoading {
+                switch viewModel.state {
+                case .none, .loading:
                     ProgressView {
                         Text("Loading...")
                     }
-                } else {
+                case .completed:
                     TextField("Type your message...", text: $inputText)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                     Button {

@@ -9,12 +9,24 @@ import AlpacaChat
 import Foundation
 import os
 
+private extension Duration {
+    var seconds: Double {
+        Double(components.seconds) + Double(components.attoseconds) / 1.0e18
+    }
+}
+
 @MainActor
 final class ChatViewModel: ObservableObject {
+    enum State {
+        case none
+        case loading
+        case completed
+    }
+
     private var chat: Chat?
 
     @Published
-    var isLoading: Bool = false
+    var state: State = .none
 
     @Published
     var messages: [Message] = []
@@ -25,7 +37,7 @@ final class ChatViewModel: ObservableObject {
         }
 
         do {
-            isLoading = true
+            state = .loading
             guard let modelURL = Bundle.main.url(forResource: "model", withExtension: "bin") else {
                 throw "Model not found."
             }
@@ -51,30 +63,41 @@ final class ChatViewModel: ObservableObject {
             let message = Message(sender: .system, text: "Failed to load model.")
             messages.append(message)
         }
-        isLoading = false
+        state = .completed
     }
 
     func send(message text: String) async {
-        let requestMessage = Message(sender: .user, text: text)
+        let requestMessage = Message(sender: .user, state: .typed, text: text)
         messages.append(requestMessage)
 
         guard let chat = chat else {
-            let message = Message(sender: .system, text: "Chat is unavailable.")
+            let message = Message(sender: .system, state: .error, text: "Chat is unavailable.")
             messages.append(message)
             return
         }
 
         do {
-            var responseMessage = Message(sender: .system, isLoading: true, text: "")
-            messages.append(responseMessage)
-            let responseMessageIndex = messages.endIndex - 1
-            for try await token in chat.predictTokens(for: text) {
-                responseMessage.isLoading = false
-                responseMessage.text += token
-                messages[responseMessageIndex] = responseMessage
+            var message = Message(sender: .system, text: "")
+            messages.append(message)
+            let messageIndex = messages.endIndex - 1
+
+            var numberOfTokens = 0
+            let duration = try await ContinuousClock().measure {
+                for try await token in chat.predictTokens(for: text) {
+                    message.state = .predicting
+                    message.text += token
+
+                    var updatedMessages = messages
+                    updatedMessages[messageIndex] = message
+                    messages = updatedMessages
+
+                    numberOfTokens += 1
+                }
             }
+            message.state = .predicted(tokensPerSeconds: Double(numberOfTokens) / duration.seconds)
+            messages[messageIndex] = message
         } catch {
-            let message = Message(sender: .system, text: error.localizedDescription)
+            let message = Message(sender: .system, state: .error, text: error.localizedDescription)
             messages.append(message)
         }
     }
