@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5423912729C5D1840041C234 /* AlpacaChatApp.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5423912629C5D1840041C234 /* AlpacaChatApp.xcconfig */; };
 		54601CFB29C701F900E459DD /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54601CFA29C701F900E459DD /* ChatViewModel.swift */; };
+		5498C52229D10E0A0090856F /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5498C52129D10E0A0090856F /* String.swift */; };
 		54B223E629C5CF9F006F4683 /* AlpacaChatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B223E529C5CF9F006F4683 /* AlpacaChatApp.swift */; };
 		54B223E829C5CF9F006F4683 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B223E729C5CF9F006F4683 /* ChatView.swift */; };
 		54B223EA29C5CF9F006F4683 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 54B223E929C5CF9F006F4683 /* Assets.xcassets */; };
@@ -22,6 +23,7 @@
 /* Begin PBXFileReference section */
 		5423912629C5D1840041C234 /* AlpacaChatApp.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = AlpacaChatApp.xcconfig; sourceTree = "<group>"; };
 		54601CFA29C701F900E459DD /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
+		5498C52129D10E0A0090856F /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		54B223E229C5CF9F006F4683 /* AlpacaChatApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AlpacaChatApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		54B223E529C5CF9F006F4683 /* AlpacaChatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlpacaChatApp.swift; sourceTree = "<group>"; };
 		54B223E729C5CF9F006F4683 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 				54601CFA29C701F900E459DD /* ChatViewModel.swift */,
 				54E9B23629C97AEC00958DFE /* Message.swift */,
 				54E9B23729C97AEC00958DFE /* MessageView.swift */,
+				5498C52129D10E0A0090856F /* String.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -211,6 +214,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5498C52229D10E0A0090856F /* String.swift in Sources */,
 				54E9B23929C97AEC00958DFE /* MessageView.swift in Sources */,
 				54B223E829C5CF9F006F4683 /* ChatView.swift in Sources */,
 				54E9B23829C97AEC00958DFE /* Message.swift in Sources */,

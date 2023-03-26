@@ -9,9 +9,6 @@ import AlpacaChat
 import Foundation
 import os
 
-extension String: Error {
-}
-
 @MainActor
 final class ChatViewModel: ObservableObject {
     private var chat: Chat?
