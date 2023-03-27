@@ -246,7 +246,6 @@ bool llama_model_load_lowmem(const std::string & fname, llama_model & model, gpt
 
         ctx_size += n_embd*n_vocab*ggml_type_sizef(wtype); // output
 
-/*
         ctx_size += n_layer*(n_embd*ggml_type_sizef(GGML_TYPE_F32)); // attention_norm
 
         ctx_size += n_layer*(n_embd*n_embd*ggml_type_sizef(wtype)); // wq
@@ -259,7 +258,6 @@ bool llama_model_load_lowmem(const std::string & fname, llama_model & model, gpt
         ctx_size += n_layer*(n_ff*n_embd*ggml_type_sizef(wtype)); // w1
         ctx_size += n_layer*(n_ff*n_embd*ggml_type_sizef(wtype)); // w2
         ctx_size += n_layer*(n_ff*n_embd*ggml_type_sizef(wtype)); // w3
-*/
 
         ctx_size += n_ctx*n_layer*n_embd*ggml_type_sizef(GGML_TYPE_F16); // memory_k
         ctx_size += n_ctx*n_layer*n_embd*ggml_type_sizef(GGML_TYPE_F16); // memory_v
@@ -312,18 +310,33 @@ bool llama_model_load_lowmem(const std::string & fname, llama_model & model, gpt
         for (int i = 0; i < n_layer; ++i) {
             auto & layer = model.layers[i];
 
-            layer.attention_norm = ggml_new_tensor_1d_dummy(ctx, GGML_TYPE_F32, n_embd);
+            if (i % 6 == 0) {
+                layer.attention_norm = ggml_new_tensor_1d_dummy(ctx, GGML_TYPE_F32, n_embd);
 
-            layer.wq = ggml_new_tensor_2d_dummy(ctx, wtype, n_embd, n_embd);
-            layer.wk = ggml_new_tensor_2d_dummy(ctx, wtype, n_embd, n_embd);
-            layer.wv = ggml_new_tensor_2d_dummy(ctx, wtype, n_embd, n_embd);
-            layer.wo = ggml_new_tensor_2d_dummy(ctx, wtype, n_embd, n_embd);
+                layer.wq = ggml_new_tensor_2d_dummy(ctx, wtype, n_embd, n_embd);
+                layer.wk = ggml_new_tensor_2d_dummy(ctx, wtype, n_embd, n_embd);
+                layer.wv = ggml_new_tensor_2d_dummy(ctx, wtype, n_embd, n_embd);
+                layer.wo = ggml_new_tensor_2d_dummy(ctx, wtype, n_embd, n_embd);
 
-            layer.ffn_norm = ggml_new_tensor_1d_dummy(ctx, GGML_TYPE_F32, n_embd);
+                layer.ffn_norm = ggml_new_tensor_1d_dummy(ctx, GGML_TYPE_F32, n_embd);
 
-            layer.w1 = ggml_new_tensor_2d_dummy(ctx, wtype, n_embd,   n_ff);
-            layer.w2 = ggml_new_tensor_2d_dummy(ctx, wtype,   n_ff, n_embd);
-            layer.w3 = ggml_new_tensor_2d_dummy(ctx, wtype, n_embd,   n_ff);
+                layer.w1 = ggml_new_tensor_2d_dummy(ctx, wtype, n_embd,   n_ff);
+                layer.w2 = ggml_new_tensor_2d_dummy(ctx, wtype,   n_ff, n_embd);
+                layer.w3 = ggml_new_tensor_2d_dummy(ctx, wtype, n_embd,   n_ff);
+            } else {
+                layer.attention_norm = ggml_new_tensor_1d(ctx, GGML_TYPE_F32, n_embd);
+
+                layer.wq = ggml_new_tensor_2d(ctx, wtype, n_embd, n_embd);
+                layer.wk = ggml_new_tensor_2d(ctx, wtype, n_embd, n_embd);
+                layer.wv = ggml_new_tensor_2d(ctx, wtype, n_embd, n_embd);
+                layer.wo = ggml_new_tensor_2d(ctx, wtype, n_embd, n_embd);
+
+                layer.ffn_norm = ggml_new_tensor_1d(ctx, GGML_TYPE_F32, n_embd);
+
+                layer.w1 = ggml_new_tensor_2d(ctx, wtype, n_embd,   n_ff);
+                layer.w2 = ggml_new_tensor_2d(ctx, wtype,   n_ff, n_embd);
+                layer.w3 = ggml_new_tensor_2d(ctx, wtype, n_embd,   n_ff);
+            }
 
             // map by name
             model.tensors["layers." + std::to_string(i) + ".attention_norm.weight"] = layer.attention_norm;
@@ -529,12 +542,15 @@ bool llama_model_load_lowmem(const std::string & fname, llama_model & model, gpt
                     }
 
                     if (part_id == 0) {
-                        //change here to enable mmap load
-                        //fin_read(reinterpret_cast<char *>(tensor->data), ggml_nbytes(tensor));
-                        //fin_read_dummy((char**)&tensor->data, ggml_nbytes(tensor));
+                        // Changed here to enable mmap load.
+                        // See `ggml_new_tensor_1d_dummy`, `ggml_new_tensor_2d_dummy` etc, which is using
+                        // dummy `1` as data address.
                         size_t len = ggml_nbytes(tensor);
-                        fin_read_dummy(model.mbuf, (char**)&tensor->data, len);
-
+                        if (*&tensor->data == (void *)1) {
+                            fin_read_dummy(model.mbuf, (char**)&tensor->data, len);
+                        } else {
+                            fin_read(model.mbuf, reinterpret_cast<char *>(tensor->data), len);
+                        }
                     } else {
                         fin_seekg(model.mbuf, ggml_nbytes(tensor));
                     }
