@@ -70,7 +70,6 @@ static void fin_read(mbuf_t& mbuf, char* dst, size_t len)
     memcpy(dst, mbuf.p, len);
     mbuf.oft+=len;
     mbuf.p+=len;
-    return true;
 }
 
 static void fin_read_dummy(mbuf_t& mbuf, char** dst, size_t len)
@@ -82,7 +81,6 @@ static void fin_read_dummy(mbuf_t& mbuf, char** dst, size_t len)
     *dst = mbuf.p;
     mbuf.oft+=len;
     mbuf.p+=len;
-    return true;
 }
 
 static size_t fin_tellg(mbuf_t& mbuf)
