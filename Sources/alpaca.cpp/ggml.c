@@ -152,7 +152,8 @@ typedef double ggml_float;
 #undef bool
 #define bool _Bool
 #else
-//#include <immintrin.h>
+#include <xmmintrin.h>
+#include <pmmintrin.h>
 #endif
 #endif
 
