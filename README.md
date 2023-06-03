@@ -9,7 +9,7 @@ to implement ChatGPT like app on Apple platform devices.
 It is basically a wrapper for [alpaca.cpp](https://github.com/antimatter15/alpaca.cpp)
 that provides a simple Swift API for it.
 
-```
+```swift
 import AlpacaChat
 
 // Load model and instantiate a chat.
